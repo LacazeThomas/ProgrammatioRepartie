@@ -7,16 +7,18 @@ import java.lang.String;
 public class Main {
 
 	public static void main(String[] args) {
-		SemaphoreBinaire sem = new SemaphoreBinaire(0);
+		
 
 
 		
 		Affichage TA = new Affichage("AAA");
-
 		Affichage TB = new Affichage("BB");
+		Affichage TC = new Affichage("cc");
 
 		TB.start();
+		
 		TA.start();
+		TC.start();
 	}
 
 }
