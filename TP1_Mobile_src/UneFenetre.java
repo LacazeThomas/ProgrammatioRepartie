@@ -6,7 +6,7 @@ import javax.swing.*;
 
 class UneFenetre extends JFrame 
 {
-    private final int LARG=400, HAUT=100, OCU=10;
+    private final int LARG=400, HAUT=75, OCU=30;
     JButton[] sonButton = new JButton[OCU];
     Thread[] tache = new Thread[OCU];
     Boolean[] stop = new Boolean[OCU];

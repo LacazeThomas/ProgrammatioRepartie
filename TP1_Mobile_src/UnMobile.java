@@ -1,41 +1,81 @@
 import java.awt.*;
 import javax.swing.*;
+import java.io.*;
 
 class UnMobile extends JPanel implements Runnable
 {
     int saLargeur, saHauteur, sonDebDessin;
-    final int sonPas = 10, sonTemps=50, sonCote=40;
+	final int sonPas = 10, sonTemps=10, sonCote=10;
+	static Semaphore sem = new Semaphore(1);
+	Color color;
+	Boolean in = false;
     
-    UnMobile(int telleLargeur, int telleHauteur)
-    {
-	super();
-	saLargeur = telleLargeur;
-	saHauteur = telleHauteur;
-	setSize(telleLargeur, telleHauteur);
+    UnMobile(int telleLargeur, int telleHauteur){
+		super();
+		saLargeur = telleLargeur;
+		saHauteur = telleHauteur;
+		setSize(telleLargeur, telleHauteur);
     }
 
-    public void run()
-    {
-		while(true){
-		for (sonDebDessin=0; sonDebDessin <= saLargeur - sonPas; sonDebDessin+= sonPas){
-			repaint();
-			try{Thread.sleep(sonTemps);}
-			catch (InterruptedException telleExcp)
-				{telleExcp.printStackTrace();}
+    public void run(){	
+		while (true) {
+	
+			for (sonDebDessin=0; sonDebDessin <= saLargeur/3; sonDebDessin+= sonPas){
+				
+				color = Color.black;
+				repaint();
+				try{Thread.sleep(sonTemps);}
+				catch (InterruptedException telleExcp)
+					{telleExcp.printStackTrace();}
 			}
-		for (sonDebDessin=saLargeur - sonPas; sonDebDessin >= 0; sonDebDessin-= sonPas){
-			repaint();
-			try{Thread.sleep(sonTemps);}
-			catch (InterruptedException telleExcp)
-				{telleExcp.printStackTrace();}
+			sem.syncWait();
+			for (sonDebDessin= saLargeur/3; sonDebDessin <= saLargeur/3*2; sonDebDessin+= sonPas){
+				
+				color = Color.red;
+				repaint();
+				try{Thread.sleep(sonTemps);}
+				catch (InterruptedException telleExcp)
+					{telleExcp.printStackTrace();}
+			}
+			sem.syncSignal();
+			for (sonDebDessin= saLargeur/3*2; sonDebDessin <= saLargeur/3*3; sonDebDessin+= sonPas){
+				
+				color = Color.black;
+				repaint();
+				try{Thread.sleep(sonTemps);}
+				catch (InterruptedException telleExcp)
+					{telleExcp.printStackTrace();}
+			}
+			for (sonDebDessin=saLargeur; sonDebDessin >= saLargeur/3*2; sonDebDessin-= sonPas){
+				color = Color.black;
+				repaint();
+				try{Thread.sleep(sonTemps);}
+				catch (InterruptedException telleExcp)
+					{telleExcp.printStackTrace();}
+			}
+			sem.syncWait();
+			for (sonDebDessin=saLargeur/3*2; sonDebDessin >= saLargeur/3*1; sonDebDessin-= sonPas){
+				color = Color.red;
+				repaint();
+				try{Thread.sleep(sonTemps);}
+				catch (InterruptedException telleExcp)
+					{telleExcp.printStackTrace();}
+			}
+			sem.syncSignal();
+			for (sonDebDessin=saLargeur/3*1; sonDebDessin >= 0; sonDebDessin-= sonPas){
+				color = Color.black;
+				repaint();
+				try{Thread.sleep(sonTemps);}
+				catch (InterruptedException telleExcp)
+					{telleExcp.printStackTrace();}
 			}
 		}
 
     }
 
-    public void paintComponent(Graphics telCG)
-    {
-	super.paintComponent(telCG);
-	telCG.fillRect(sonDebDessin, saHauteur/3, sonCote, sonCote);
+    public void paintComponent(Graphics telCG){
+		super.paintComponent(telCG);
+		telCG.setColor(color);
+		telCG.fillRect(sonDebDessin, saHauteur/3, sonCote, sonCote);
     }
 }
