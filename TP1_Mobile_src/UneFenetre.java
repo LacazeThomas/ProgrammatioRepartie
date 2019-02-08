@@ -6,7 +6,7 @@ import javax.swing.*;
 
 class UneFenetre extends JFrame 
 {
-    private final int LARG=400, HAUT=250, OCU=5;
+    private final int LARG=400, HAUT=100, OCU=10;
     JButton[] sonButton = new JButton[OCU];
     Thread[] tache = new Thread[OCU];
     Boolean[] stop = new Boolean[OCU];
@@ -29,15 +29,6 @@ class UneFenetre extends JFrame
         setSize(LARG+450,HAUT*OCU);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
-        
-        /*sonMobile = new UnMobile(500, 250);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(LARG,HAUT);
-        setVisible(true);
-        setLocation(0, 0);
-        tache = new Thread(sonMobile);
-        tache.start();*/
-        
     }
 
     ActionListener listener = new ActionListener() {

@@ -36,6 +36,6 @@ class UnMobile extends JPanel implements Runnable
     public void paintComponent(Graphics telCG)
     {
 	super.paintComponent(telCG);
-	telCG.fillRect(sonDebDessin, saHauteur/2, sonCote, sonCote);
+	telCG.fillRect(sonDebDessin, saHauteur/3, sonCote, sonCote);
     }
 }
