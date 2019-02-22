@@ -6,7 +6,7 @@ import javax.swing.*;
 
 class UneFenetre extends JFrame 
 {
-    private final int LARG=400, HAUT=75, OCU=30;
+    private final int LARG=850, HAUT=75, OCU=29;
     JButton[] sonButton = new JButton[OCU];
     Thread[] tache = new Thread[OCU];
     Boolean[] stop = new Boolean[OCU];
@@ -15,18 +15,19 @@ class UneFenetre extends JFrame
     public UneFenetre()
     {
         super("prog");
+        Semaphore sem = new Semaphore(2);
         this.setLayout(new GridLayout(OCU,2));
         for(int i=0;i<OCU;i++){
             stop[i] = false;
-            sonMobile[i] = new UnMobile(LARG, HAUT);
-            sonButton[i] = new JButton("Stop/Resume");
+            sonMobile[i] = new UnMobile(LARG, HAUT,sem);
+            sonButton[i] = new JButton("Stop");
             this.getContentPane().add(sonMobile[i]);
             this.getContentPane().add(sonButton[i]);
             tache[i] = new Thread(sonMobile[i]);
             tache[i].start();
             sonButton[i].addActionListener(listener);
         }
-        setSize(LARG+450,HAUT*OCU);
+        setSize(LARG+LARG,HAUT*OCU);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
     }
@@ -40,9 +41,11 @@ class UneFenetre extends JFrame
                     if(stop[i] == true){
                         stop[i] = false;
                         tache[i].resume();
+                        src.setText("Stop");
                     }else{
                         stop[i] = true;
                         tache[i].suspend();
+                        src.setText("Resume");
                     }
                 }
             }

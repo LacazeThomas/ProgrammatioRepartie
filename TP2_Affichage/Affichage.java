@@ -15,7 +15,7 @@ class Exclusion{}
 
 public class Affichage extends Thread{
 	String texte; 
-	static Exclusion exclusionImpression = new Exclusion();
+	static Exclusion exclusionImpression = new Exclusion(); //Classe scope 
 	static SemaphoreBinaire sem = new SemaphoreBinaire(1);
 
 	public Affichage (String txt){
@@ -23,6 +23,7 @@ public class Affichage extends Thread{
 	}
 	
 	public void run(){
+		//synchronized()
 		sem.syncWait();
 		for (int i=0; i<texte.length(); i++){
 			System.out.print(texte.charAt(i));

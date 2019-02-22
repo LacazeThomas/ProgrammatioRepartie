@@ -1,18 +1,19 @@
+import java.io.Console;
 public class Moniteur {
 
 	String buffer;
 	Boolean available;
 
 	public Moniteur(){
-		available = true;
-		buffer = "Init";	
+		available = false;
+		buffer = "Init";
 	}
 
 	public synchronized void read(){
 		//Tant que occupé
 		while(available == false){
 			try {
-				sleep(100);
+				wait(100);
 			} catch(InterruptedException e){
 			};
 		}
@@ -21,15 +22,22 @@ public class Moniteur {
 		notifyAll();
 	}
 
-	public synchronized void write(String parWrite){
+	public synchronized void write(){
 		//Tant que pas occupé
 		while(available == true){
 			try {
-				sleep(100);
+				wait(100);
 			} catch(InterruptedException e){
 			};
 		}
-		buffer = parWrite;
+
+		Console console = System.console();
+		String input = console.readLine("Enter input:");
+
+		if(input.equals("q")){
+			System.exit(1);
+		}
+		buffer = input;
 		available = true;
 		notifyAll();
 	}

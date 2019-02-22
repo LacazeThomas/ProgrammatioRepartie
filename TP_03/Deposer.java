@@ -9,14 +9,15 @@ import java.lang.String;
 //Perimetre d'une classe
 //Perimetre du container
 
-public class Consommateur extends Thread{
+public class Deposer extends Thread{
 
 	public Moniteur mb;
 
-	public Consommateur(Moniteur parMoniteur){
+	public Deposer(Moniteur parMoniteur){
 		mb = parMoniteur;
 	}
 	
 	public void run(){
+		mb.write();
 	}
 }

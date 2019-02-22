@@ -9,12 +9,24 @@ public class Main {
 	public static void main(String[] args) {
 
 		Moniteur mb = new Moniteur();
-		Producteur producteur = new Producteur(mb);
-		Consommateur consommateur = new Consommateur(mb);
+		int OCU = 10;
+		Deposer[] consommateur = new Deposer[OCU];
+		Retirer[] producteur = new Retirer[OCU];
 
+		Thread[] thProducteur = new Thread[OCU];
+		Thread[] thConsommateur = new Thread[OCU];
 
-		producteur.mb.read();
-		producteur.mb.write("test");
+		for(int i=0;i<OCU;i++){
+			consommateur[i] = new Deposer(mb);
+			producteur[i] = new Retirer(mb);
+
+			thProducteur[i] = new Thread(producteur[i]);
+			thConsommateur[i] = new Thread(consommateur[i]);
+	
+			thConsommateur[i].start();
+			thProducteur[i].start();
+		}
+		
 	}
 
 }
